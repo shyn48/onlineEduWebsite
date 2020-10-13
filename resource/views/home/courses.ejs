@@ -1,0 +1,106 @@
+<header class="jumbotron hero-spacer mt-4">
+  <h1>دوره‌های آموزشی</h1>
+  <p>
+    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+    طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که
+    لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
+    ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده
+  </p>
+</header>
+
+<% let {search, type, order, category} = req.query; %>
+
+<form action="/courses" method="GET">
+  <% if(search) { %>
+  <div class="form-group col-md-3">
+    <input type="hidden" , name="search" , value="<%=search%>" />
+    <span
+      >عبارت جستجو شده: <%= search %><a
+        href="/courses<%= type ? '?type=' + type : '' %><%= order ? '&order=1' : '' %>"
+        class="btn mr-2 btn-sm btn-dark"
+        >حذف</a
+      ></span
+    >
+  </div>
+  <% } else { %>
+  <div class="form-group col-md-3">
+    <p>جستجو</p>
+    <input type="text" , name="search" class="p-1 rounded w-75 border" />
+  </div>
+  <% } %>
+  <div class="form-group col-md-3">
+    <select
+      class="p-1 rounded w-75 border"
+      style="outline: none"
+      name="type"
+      id="form-control"
+    >
+      <option value="all"<%= type === 'all' ? 'selected' : '' %>>همه دوره ها</option>
+      <option value="vip"<%= type === 'vip' ? 'selected' : '' %>>اعضای ویژه</option>
+      <option value="cash"<%= type === 'cash' ? 'selected' : '' %>>نقدی</option>
+      <option value="free"<%= type === 'free' ? 'selected' : '' %>>رایگان</option>
+    </select>
+  </div>
+
+  <div class="form-group col-md-3">
+    <select
+      class="p-1 rounded w-75 border"
+      style="outline: none"
+      name="category"
+      id="form-control"
+    >
+      <option value="all">همه دسته ها</option>
+      <% categories.forEach(cate => { %>
+        <option value="<%= cate.slug %>" <%= cate.slug === category ? 'selected' : '' %>><%= cate.name %></option>
+     <% }) %>
+    </select>
+  </div>
+
+  <div class="form-group col-md-3">
+    <label class="checkbox-inline">
+      <input type="checkbox" name="order" value="1" class="ml-2" <%= order === '1' ? 'checked' : '' %> />از اول به آخر
+    </label>
+  </div>
+
+  <div class="form-group col-md-3">
+    <button class="btn btn-danger" type="submit">فیتلر</button>
+  </div>
+</form>
+
+<hr />
+
+
+
+<% if(courses.length) { %>
+
+  <div class="row">
+    <% courses.forEach(course => { %>
+    <div class="col-6 col-md-3 d-flex align-items-stretch mb-5">
+      <div class="card">
+        <img
+          src="<%= course.thumb %>"
+          alt="<%= course.title%>"
+          class="card-img-top"
+        />
+        <div class="card-body d-flex flex-column justify-content-between">
+          <h3><a href="<%= course.path() %>"><%=course.title %></a></h3>
+          <p class="card-text"><%=course.body.substr(0, 100)%></p>
+          <a href="<%= course.path() %>" class="w-50 btn btn-primary btn-sm"
+            >اطلاعات بیشتر</a
+          >
+        </div>
+        <div class="card-footer text-muted">بازدید <%=course.viewCount%></div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+  
+  <% } else { %>
+    
+    <div class="row d-flex justify-content-center">
+      <p class="lead">دوره ای یافت نشد</p>
+    </div>
+
+    <% } %>
+
+<%- include(viewPath('layouts/pagination'), { pagination : courses }) %>

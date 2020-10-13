@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="row pt-5 justify-content-center">
+    <div class="col-8">
+      <div class="card card-default">
+        <div class="card-header"><h5>ورود به سایت</h5></div>
+        <div class="card-body">
+          <form action="/auth/login" method="POST" class="form-horizontal">
+            <%- include(viewPath('layouts/error-message')) -%>
+
+            <div class="form-group">
+              <label for="email" class="control-label">ایمیل</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                name="email"
+                placeholder="ایمیل خود را وارد کنید"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="password" class="control-label">پسورد</label>
+              <input
+                type="password"
+                id="password"
+                class="form-control"
+                name="password"
+                placeholder="پسورد خود را وارد کنید"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <div class="checkbox">
+                <input type="checkbox" name="remember" />
+                <label>مرا به خاطر بسپار</label>
+              </div>
+            </div>
+
+            <div class="form-group"><%- recaptcha %></div>
+
+            <div class="form-group">
+              <button for="submit" class="btn btn-primary">ورود</button>
+              <a href="/auth/google" class="btn btn-danger"
+                >ورود با اکانت گوگل</a
+              >
+              <a href="/auth/password/reset" class="btn btn-link"
+                >رمز عبور خود را فراموش کردم!</a
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

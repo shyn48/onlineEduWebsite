@@ -1,0 +1,44 @@
+<div
+  class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom"
+>
+  <h2>ویرایش دسته</h2>
+</div>
+<form class="form-horizontal" action="/admin/categories/<%= category._id%>?_method=put" method="post">
+  <%- include(viewPath('layouts/error-message')) -%>
+
+  <div class="form-group row">
+    <div class="col">
+      <label for="name" class="control-label font-weight-bold"
+        >عنوان دسته</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        id="name"
+        placeholder="عنوان را وارد کنید"
+        value="<%= old('name', category.name) %>"
+      />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col">
+      <label for="category" class="control-label font-weight-bold font-weight-bold"
+        >دسته‌ی مرتبط</label
+      >
+      <select name="parent" id="category" class="form-control">
+        <option value="none"> دسته‌ی اصلی </option>
+        <% categories.forEach(cate => { %>
+          <option value="<%=cate._id%>" <%= String(old('category', category.parent)) == String(cate._id) ? 'selected' : '' %> ><%=cate.name %></option>
+        <%  }) %>
+      </select>
+    </div>
+  </div>  
+
+  <div class="form-group row">
+    <div class="col">
+      <button type="submit" class="btn btn-danger">ویرایش</button>
+    </div>
+  </div>
+</form>

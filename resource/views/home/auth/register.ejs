@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="row pt-5 justify-content-center">
+    <div class="col-8">
+      <div class="card card-default">
+        <div class="card-header"><h5>عضویت در سایت</h5></div>
+        <div class="card-body">
+          <form
+            action="/auth/register"
+            method="POST"
+            class="form-horizontal"
+            novalidate
+          >
+            <%- include(viewPath('layouts/error-message')) -%>
+
+            <div class="form-group">
+              <label for="name" class="control-label">نام کامل</label>
+              <input
+                type="text"
+                id="name"
+                class="form-control"
+                name="name"
+                placeholder="نام و نام خانوداگی"
+                required
+                value="<%= old('name') %>"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email" class="control-label">ایمیل</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control"
+                name="email"
+                placeholder="ایمیل خود را وارد کنید"
+                value="<%= old('email') %>"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="password" class="control-label">پسورد</label>
+              <input
+                type="password"
+                id="password"
+                class="form-control"
+                name="password"
+                placeholder="پسورد خود را وارد کنید"
+                value="<%= old('password') %>"
+                required
+              />
+            </div>
+
+            <div class="form-group"><%- recaptcha %></div>
+
+            <div class="form-group">
+              <button for="submit" class="btn btn-primary">عضویت</button>
+              <a href="/auth/google" class="btn btn-primary"
+                >ورود با اکانت گوگل</a
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

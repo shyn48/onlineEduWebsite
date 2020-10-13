@@ -1,0 +1,11 @@
+body {
+  font-family: 'Vazir', Vazir, Tahoma, Arial, sans-serif !important;
+  font-size: 0.875rem;
+  font-weight: 300;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
+}

@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="row pt-5 justify-content-center">
+      <div class="col-8">
+        <div class="card card-default">
+          <div class="card-header"><h5></h5>بازیابی رمز عبور</h5></div>
+          <div class="card-body">
+            <form action="/auth/password/reset" method="POST" class="form-horizontal" novalidate>
+              <%- include(viewPath('layouts/error-message')) -%>
+  
+              <input type="hidden" name="token" value="<%= token %>">
+
+              <div class="form-group">
+                <label for="email" class="control-label">ایمیل</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  name="email"
+                  placeholder="ایمیل خود را وارد کنید"
+                  required
+                  value="<%= old('email') %>"
+                />
+              </div>
+
+
+              <div class="form-group">
+                <label for="password" class="control-label">پسورد جدید</label>
+                <input
+                  type="password"
+                  id="password"
+                  class="form-control"
+                  name="password"
+                  placeholder="پسورد خود را وارد کنید"
+                  required
+                  value="<%= old('password') %>"
+                />
+              </div>
+  
+              <div class="form-group"><%- recaptcha %></div>
+  
+              <div class="form-group">
+                <button for="submit" class="btn btn-primary">ریست</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

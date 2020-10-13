@@ -1,0 +1,172 @@
+<div class="row">
+  <!-- Blog Post Content Column -->
+  <div class="col-lg-8">
+    <!-- Title -->
+    <h1 class="mb-3"><%= course.title %></h1>
+
+    <!-- Author -->
+    <p class="text-muted small">
+      <span> توسط <a href="#"><%= course.user.name %></a></span>
+      -
+      <span
+        >ارسال شده در<%= date(course.createdAt).format('jD jMMMM jYYYY') %>
+      </span>
+    </p>
+
+    <hr />
+    <!-- Post Content -->
+    <div id="content"><%- course.body %></div>
+    <hr />
+
+    <% if(auth.check) { %> <% if(course.type =='vip') { if(! req.user.isVip()) {
+    %>
+    <div class="alert alert-danger">
+      برای مشاهده این دوره نیاز است عضویت ویژه را تهیه کنید
+    </div>
+    <% } } else if(course.type =='cash') { if(!
+    req.user.checkLearning(course._id)) { %>
+    <div class="alert alert-danger">
+      برای مشاهده این دوره نیاز است بصورت نقدی دوره را تهیه کنید
+    </div>
+    <% } else { %>
+    <div class="alert alert-success">شما در این دوره ثبت نام کرده اید</div>
+    <% } } } else { %>
+    <div class="alert alert-danger">
+      برای مشاهده این دوره نیاز است ابتدا وارد سایت شوید
+    </div>
+    <% } %>
+
+    <h3>قسمت های دوره</h3>
+    <table class="table table-condensed table-bordered">
+      <thead>
+        <tr>
+          <th>شماره قسمت</th>
+          <th>عنوان قسمت</th>
+          <th>زمان قسمت</th>
+          <th>دانلود</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% course.episodes.forEach(episode => { %>
+        <tr>
+          <th>
+            <a href="/courses/آموزش-پروژه-محور-bootstrap-1/1"
+              ><%= episode.number %></a
+            >
+          </th>
+          <td><%= episode.title %></td>
+          <td><%= episode.time %></td>
+          <td>
+            <a id="<%= episode.number %>" href="<%= episode.download(req) %>"
+              >دانلود</a
+            >
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <!-- Blog Comments -->
+    <hr />
+    <%- include(viewPath('layouts/comments'), { subject: course, comments:
+    course.comments }) -%>
+  </div>
+
+  <!-- Blog Sidebar Widgets Column -->
+
+  <div class="col-md-4 mt-5">
+    <% if(auth.check) { if (course.type == 'vip') { if(! req.user.isVip()) { %>
+    <div class="alert alert-danger">
+      برای مشاهده این دوره نیاز است عضویت ویژه را تهیه کنید
+    </div>
+    <% } else { %>
+    <div class="card my-4">
+      <div class="card-body">
+        <p>شما عضو ویژه هستید و می توانید از این دوره استفاده کنید</p>
+      </div>
+    </div>
+    <% } } else if(course.type == 'cash') { if(!
+    req.user.checkLearning(course._id)) { %>
+
+    <div class="card my-4">
+      <div class="card-body">
+        <p>باید با قیمت <%=course.price%> تومن دوره را خریداری کنید</p>
+        <form action="/course/payment" method="post">
+          <input type="hidden" name="course" value="<%=course._id%>" />
+          <button type="submit" class="btn btn-success">خرید دوره</button>
+        </form>
+      </div>
+    </div>
+
+    <% } else { %>
+    <div class="card my-4">
+      <div class="card-body">
+        <p>شما در این دوره ثبت نام کرده اید</p>
+      </div>
+    </div>
+    <% } } else { %>
+    <div class="card my-4">
+      <div class="card-body">
+        <p>این دوره رایگان است و شما به آن دسترسی دارید</p>
+      </div>
+    </div>
+    <% } } else { %>
+
+    <div class="card my-4">
+      <div class="card-body">
+        <a href="/auth/login">برای مشاهده دوره باید وارد سایت شوید</a>
+      </div>
+    </div>
+    <% } %>
+
+    <!-- Search Widget -->
+    <div class="card my-4">
+      <h5 class="card-header">جستجو</h5>
+      <div class="card-body">
+        <form action="/courses" method="GET" class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="دنبال چی میگردی ؟"
+            name="search"
+          />
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" type="submit">جستجو!</button>
+          </span>
+        </form>
+      </div>
+    </div>
+
+    <!-- Categories Widget -->
+    <div class="card my-4">
+      <h5 class="card-header">دسته بندی ها</h5>
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <ul class="list-unstyled pr-0">
+              <% categories.forEach(category => {%>
+
+              <li>
+                <a href="/courses?category=<%=category.name %>"
+                  ><%= category.name %></a
+                >
+                <% if (category.childs) { %>
+                <ul>
+                  <% category.childs.forEach(child => {%>
+                  <li>
+                    <a href="/courses?category=<%=category.name %>"
+                      ><%= child.name %></a
+                    >
+                  </li>
+                  <%}) %>
+                </ul>
+                <% } %>
+              </li>
+
+              <%}) %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

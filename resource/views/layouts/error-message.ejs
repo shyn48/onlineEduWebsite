@@ -1,0 +1,17 @@
+<% if (errors.length > 0) { %>
+<div class="alert alert-danger alert-dismissable">
+  <button
+    class="close position-absolute"
+    data-dismiss="alert"
+    aria-label="Close"
+    type="button"
+    style="top: 3px; left: 10px; outline: none"
+  >
+    <span style="opacity: 0.7">x</span>
+  </button>
+
+  <% errors.forEach(error => { %>
+  <p><%= error %></p>
+  <% }) %>
+</div>
+<% } %>

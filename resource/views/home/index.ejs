@@ -1,0 +1,40 @@
+<header class="jumbotron hero-spacer mt-4">
+  <h1>مجله آموزشی شین</h1>
+  <p>
+    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
+    طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که
+    لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود
+    ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده
+  </p>
+</header>
+
+<div class="row mb-3">
+  <div class="col-lg-12">
+    <h3>آخرین دوره ها</h3>
+  </div>
+</div>
+
+<div class="row">
+  <% courses.forEach(course => { %>
+  <div class="col-6 col-md-3 d-flex align-items-stretch mb-5">
+    <div class="card">
+      <img
+        src="<%= course.thumb %>"
+        alt="<%= course.title%>"
+        class="card-img-top"
+      />
+      <div class="card-body d-flex flex-column justify-content-between">
+        <h3><a href="<%= course.path() %>"><%=course.title %></a></h3>
+        <p class="card-text">
+          <%=course.body.replace(/<[^>]*>?/gm, '').substring(0, 100); %>
+          <!-- Better soultion would be to add a description field to the courses and show them in here instead of showing the body and parsing the html -->
+        </p>
+        <a href="<%= course.path() %>" class="w-50 btn btn-primary btn-sm"
+          >اطلاعات بیشتر</a
+        >
+      </div>
+      <div class="card-footer text-muted">بازدید <%=course.viewCount%></div>
+    </div>
+  </div>
+  <% }) %>
+</div>
