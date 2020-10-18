@@ -40,7 +40,11 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <% if(auth.check) { %>
+            <% if(req.getLocale() == 'fa') { %>
+            <a href="/lang/en" class="btn btn-success btn-sm ml-2">English</a>
+            <% } else if(req.getLocale() == 'en') { %>
+            <a href="/lang/fa" class="btn btn-success btn-sm ml-2">Persian</a>
+            <% } %> <% if(auth.check) { %>
             <li>
               <a class="btn btn-danger btn-sm ml-1" href="/logout">خروج</a>
             </li>
