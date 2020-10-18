@@ -5,6 +5,7 @@ const validator = require('validator');
 
 class homeController extends controller {
   index = async (req, res) => {
+    //   console.log(req.getLocale());
     let courses = await Course.find({}).sort({ createdAt: 1 }).limit(8).exec();
     res.render('home/index', { courses });
   };
