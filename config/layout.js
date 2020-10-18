@@ -6,4 +6,5 @@ module.exports = {
   public_dir: publicDirectoryPath,
   view_dir: path.resolve('resource/views'),
   view_engine: 'ejs',
+  locales_dir: path.resolve('./resource/lang'),
 };
