@@ -43,5 +43,8 @@ router.post(
 
 router.get('/user/panel', userController.index);
 router.get('/user/panel/history', userController.history);
+router.get('/user/panel/vip', userController.vip);
+router.post('/user/panel/vip/payment', userController.vipPayment);
+router.get('/user/panel/vip/payment/checker', userController.vipPaymentChecker);
 
 module.exports = router;

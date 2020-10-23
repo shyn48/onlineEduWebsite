@@ -14,10 +14,10 @@
       <tr>
         <td><%= payment.price %> تومان</td>
         <td>
-          <%= payment.vip ? ' خریداری عضویت ویژه' : `خرید دوره
-          ${payment.course.title}` %>
+          <%= payment.vip ? 'شارژ عضویت ویژه' : `خرید ${payment.course ?
+          payment.course.title : 'خرید دوره ی قدیمی'}` %>
         </td>
-        <td><%= payment.payment ? 'موفق' : 'ناموفق' %></td>
+        <td><%= payment.paid ? 'موفق' : 'ناموفق' %></td>
       </tr>
       <% }) %>
     </tbody>

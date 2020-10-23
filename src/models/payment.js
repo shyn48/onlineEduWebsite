@@ -16,10 +16,4 @@ const paymentSchema = Schema(
 
 paymentSchema.plugin(mongoosePaginate);
 
-paymentSchema.virtual('childs', {
-  ref: 'Payment',
-  localField: '_id',
-  foreignField: 'parent',
-});
-
 module.exports = mongoose.model('Payment', paymentSchema);

@@ -3,5 +3,15 @@
 <ul style="margin: 20px">
   <li><b>نام کاربری</b> :<%= auth.user.name %></li>
   <li><b>ایمیل کاربری</b> : <%= auth.user.email %></li>
-  <li><b>زمان پایان اعتبار ویژه</b> : ۱ ماه پیش دیگر</li>
+  <% if(auth.user.isVip()) { %>
+
+  <li>
+    <b>زمان پایان اعتبار ویژه</b> : <%= date(auth.user.vipTime).fromNow() %>
+  </li>
+
+  <% } else { %>
+
+  <li><b>شما عضو ویژه نیستید یا زمان عضویت ویژه شما به پایان رسیده است</b></li>
+
+  <% } %>
 </ul>
