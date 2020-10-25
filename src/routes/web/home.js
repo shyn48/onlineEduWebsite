@@ -51,4 +51,6 @@ router.get('/sitemap.xml', homeController.sitemap)
 router.get('/feed/courses', homeController.coursesFeed)
 router.get('/feed/episodes', homeController.episodesFeed)
 
+router.get('/upload', (req, res, next) => res.render('home/ajaxUpload'))
+
 module.exports = router;
