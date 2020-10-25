@@ -47,4 +47,6 @@ router.get('/user/panel/vip', userController.vip);
 router.post('/user/panel/vip/payment', userController.vipPayment);
 router.get('/user/panel/vip/payment/checker', userController.vipPaymentChecker);
 
+router.get('/sitemap.xml', homeController.sitemap)
+
 module.exports = router;
