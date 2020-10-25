@@ -8,6 +8,9 @@ const userController = require('src/http/controllers/userController');
 //middlewares
 
 const redirectIfNotAuthenticated = require('src/http/middlewares/redirectIfNotAuthenticated');
+const convertFileToField = require('src/http/middlewares/convertFileToField');
+
+const upload = require('src/helpers/uploadImage')
 
 router.get('/logout', (req, res) => {
   req.logout();
@@ -52,5 +55,12 @@ router.get('/feed/courses', homeController.coursesFeed)
 router.get('/feed/episodes', homeController.episodesFeed)
 
 router.get('/upload', (req, res, next) => res.render('home/ajaxUpload'))
+router.post('/upload', upload.single('photo'), (req, res, next) => {
+  try {
+    res.json({ ...req.body, ...req.file })
+  } catch (error) {
+    next(error);
+  }
+})
 
 module.exports = router;
