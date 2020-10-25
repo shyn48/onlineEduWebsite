@@ -6,6 +6,8 @@ const validator = require('validator');
 const sm = require('sitemap')
 const { createGzip } = require('zlib')
 const { Readable } = require('stream')
+const rss = require('rss')
+const striptags = require('striptags')
 
 let sitemap;
 
@@ -92,6 +94,43 @@ class homeController extends controller {
 
     } catch (error) {
       res.send(error)
+    }
+  }
+
+  async coursesFeed(req, res, next) {
+    try {
+      let feed = new rss({
+        title: 'rss feed',
+        description: 'newest courses',
+        feed_url: `${process.env.WEBSITE_URL}/feed/courses`,
+        site_url: process.env.WEBSITE_URL
+      })
+
+      let courses = await Course.find({}).sort({ createdAt: -1 }).exec();
+
+      courses.forEach(course => {
+        feed.item({
+          title: course.title,
+          description: striptags(course.body.substr(0, 100)),
+          date: course.createdAt,
+          url: course.path(),
+          author: course.user.name
+        })
+      })
+
+      res.header('Content-Type', 'application/xml');
+      res.send(feed.xml())
+
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async episodesFeed(req, res, next) {
+    try {
+
+    } catch (error) {
+      next(error)
     }
   }
 

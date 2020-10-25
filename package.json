@@ -42,6 +42,7 @@
     "sitemap": "^6.3.2",
     "soap": "^0.33.0",
     "sprintf-js": "^1.1.2",
+    "striptags": "^3.1.1",
     "unique-string": "^2.0.0",
     "validator": "^13.1.1"
   },
