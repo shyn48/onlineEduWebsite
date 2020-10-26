@@ -53,7 +53,7 @@ class userController extends controller {
       let args = {
         MerchantID: '00',
         Amount: price,
-        CallbackURL: 'http://localhost:3000/user/panel/vip/payment/checker',
+        CallbackURL: `${process.env.WEBSITE_URL}/user/panel/vip/payment/checker`,
         Description: `بابات افزایش اعتبار ویژه `,
         Email: req.user.email,
       };

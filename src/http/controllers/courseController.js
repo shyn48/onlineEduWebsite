@@ -194,7 +194,7 @@ class courseController extends controller {
       let args = {
         MerchantID: '00',
         Amount: course.price,
-        CallbackURL: 'http://localhost:3000/course/payment/checker',
+        CallbackURL: `${process.env.WEBSITE_URL}/course/payment/checker`,
         Description: `بابات خرید دوره ${course.title}`,
         Email: req.user.email,
       };
