@@ -9,10 +9,10 @@ class CourseController extends controller {
     async courses(req, res, next) {
         try {
             let page = req.query.page || 1;
-            let courses = await Course.paginate({}, { page, sort: { createdAt: 1 }, limit: 12 })
+            let courses = await Course.paginate({}, { page, sort: { createdAt: 1 }, limit: 12, populate: [{ path: 'categories' }, { path: 'user' }] })
 
             res.json({
-                data: courses,
+                data: this.filterCoursesData(courses),
                 status: 'success'
             })
 
@@ -20,6 +20,33 @@ class CourseController extends controller {
             res.status(500).json({
                 data: error.message,
                 status: 'error'
+            })
+        }
+    }
+
+    filterCoursesData(courses) {
+        return {
+            ...courses,
+            docs: courses.docs.map(course => {
+                return {
+                    id: course.id,
+                    title: course.title,
+                    slug: course.slug,
+                    body: course.body,
+                    image: course.thumb,
+                    categories: course.categories.map(cate => {
+                        return {
+                            name: cate.name,
+                            slug: cate.slug
+                        }
+                    }),
+                    user: {
+                        id: course.user.id,
+                        name: course.user.name
+                    },
+                    price: course.price,
+                    createdAt: course.createdAt
+                }
             })
         }
     }
