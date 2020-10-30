@@ -21,14 +21,14 @@ const EpisodeScehma = Schema(
 
 EpisodeScehma.plugin(mongoosePaginate);
 
-EpisodeScehma.methods.download = function (req) {
-  if (!req.isAuthenticated()) return '#';
+EpisodeScehma.methods.download = function (check, user) {
+  if (!check) return '#';
 
   let status = false;
 
   if (this.type == 'free') status = true;
-  else if (this.type == 'vip') status = req.user.isVip();
-  else if (this.type == 'cash') status = req.user.checkLearning(this.course);
+  else if (this.type == 'vip') status = user.isVip();
+  else if (this.type == 'cash') status = user.checkLearning(this.course);
 
   let timestamps = new Date().getTime() + 3600 * 1000 * 12;
 
