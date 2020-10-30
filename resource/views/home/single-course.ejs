@@ -8,8 +8,7 @@
     <p class="text-muted small">
       <span> توسط <a href="#"><%= course.user.name %></a></span>
       -
-      <span
-        >ارسال شده در<%= date(course.createdAt).format('jD jMMMM jYYYY') %>
+      <span>ارسال شده در<%= date(course.createdAt).format('jD jMMMM jYYYY') %>
       </span>
     </p>
 
@@ -50,16 +49,12 @@
         <% course.episodes.forEach(episode => { %>
         <tr>
           <th>
-            <a href="/courses/آموزش-پروژه-محور-bootstrap-1/1"
-              ><%= episode.number %></a
-            >
+            <a href="/courses/آموزش-پروژه-محور-bootstrap-1/1"><%= episode.number %></a>
           </th>
           <td><%= episode.title %></td>
           <td><%= episode.time %></td>
           <td>
-            <a id="<%= episode.number %>" href="<%= episode.download(req) %>"
-              >دانلود</a
-            >
+            <a id="<%= episode.number %>" href="<%= episode.download(req.isAuthenticated(), req.user) %>">دانلود</a>
           </td>
         </tr>
         <% }) %>
@@ -123,12 +118,7 @@
       <h5 class="card-header">جستجو</h5>
       <div class="card-body">
         <form action="/courses" method="GET" class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="دنبال چی میگردی ؟"
-            name="search"
-          />
+          <input type="text" class="form-control" placeholder="دنبال چی میگردی ؟" name="search" />
           <span class="input-group-btn">
             <button class="btn btn-secondary" type="submit">جستجو!</button>
           </span>
@@ -146,16 +136,12 @@
               <% categories.forEach(category => {%>
 
               <li>
-                <a href="/courses?category=<%=category.name %>"
-                  ><%= category.name %></a
-                >
+                <a href="/courses?category=<%=category.name %>"><%= category.name %></a>
                 <% if (category.childs) { %>
                 <ul>
                   <% category.childs.forEach(child => {%>
                   <li>
-                    <a href="/courses?category=<%=category.name %>"
-                      ><%= child.name %></a
-                    >
+                    <a href="/courses?category=<%=category.name %>"><%= child.name %></a>
                   </li>
                   <%}) %>
                 </ul>
