@@ -47,24 +47,6 @@ class ResetPasswordController extends controller {
     }
   }
 
-  async sendResetLink(req, res) {
-    let user = await User.findOne({ email: req.body.email });
-    if (!user) {
-      req.flash('errors', 'کاربری با این ایمیل وجود ندارد');
-      return this.back(req, res);
-    }
-
-    const newPasswordReset = new PasswordReset({
-      email: req.body.email,
-      token: uniqueString(),
-    });
-
-    await newPasswordReset.save();
-
-    // req.flash('success', 'ایمیل بازیابی رمز عبور ارسال شد');
-    res.redirect('/');
-  }
-
   async resetPassword(req, res) {
     let field = await PasswordReset.findOne({
       $and: [{ email: req.body.email }, { token: req.body.token }],
