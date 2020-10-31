@@ -27,6 +27,7 @@
     "express-recaptcha": "^5.0.2",
     "express-session": "^1.17.1",
     "express-validator": "^6.6.1",
+    "helmet": "^4.1.1",
     "highlight.js": "^10.2.0",
     "i18n": "^0.13.2",
     "jsonwebtoken": "^8.5.1",

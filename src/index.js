@@ -17,6 +17,7 @@ const rememberLogin = require('src/http/middlewares/rememberLogin');
 const gate = require('src/helpers/gate');
 const i18n = require('i18n');
 const methodOverride = require('method-override');
+const helmet = require('helmet');
 
 module.exports = class Application {
   constructor() {
@@ -47,7 +48,7 @@ module.exports = class Application {
     require('src/passport/passport-local.js');
     require('src/passport/passport-google.js');
     require('src/passport/passport-jwt.js');
-
+    app.use(helmet())
     app.use(express.static(config.layout.public_dir));
     app.set('view engine', config.layout.view_engine);
     app.set('views', config.layout.view_dir);
