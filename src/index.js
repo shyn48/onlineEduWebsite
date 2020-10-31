@@ -18,6 +18,10 @@ const gate = require('src/helpers/gate');
 const i18n = require('i18n');
 const methodOverride = require('method-override');
 const helmet = require('helmet');
+const csp = require('helmet-csp');
+const csurf = require('csurf');
+const csurfErrorHandler = require('src/http/middlewares/csurfErrorHandler');
+const crypto = require('crypto')
 
 module.exports = class Application {
   constructor() {
@@ -50,7 +54,28 @@ module.exports = class Application {
     require('src/passport/passport-jwt.js');
 
     app.enable('trust proxy')
-    app.use(helmet())
+    //app.use(helmet())
+
+    // const crypto = require("crypto");
+
+    // app.use((req, res, next) => {
+    //   res.locals.nonce = crypto.randomBytes(16).toString("hex");
+    //   next();
+    // });
+
+    // app.use((req, res, next) => {
+    //   csp({
+    //     directives: {
+    //       defaultSrc: ["'self'"],
+    //       scriptSrc: ["'self'", `'nonce-${res.locals.nonce}'`],
+    //     },
+    //   })(req, res, next);
+    // });
+
+    // app.use((req, res) => {
+    //   res.end(`<script nonce="${res.locals.nonce}">alert(1 + 1);</script>`);
+    // });
+
     app.use(express.static(config.layout.public_dir));
     app.set('view engine', config.layout.view_engine);
     app.set('views', config.layout.view_dir);
@@ -85,6 +110,7 @@ module.exports = class Application {
 
   setRouters() {
     app.use(apiRouters);
-    app.use(routers);
+    app.use(csurf({ cookie: true }), routers);
+    app.use(csurfErrorHandler.handle);
   }
 };
