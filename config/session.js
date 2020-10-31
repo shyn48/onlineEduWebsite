@@ -3,6 +3,7 @@ const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
 
 module.exports = {
+  name: 'session_shyn',
   secret: process.env.SESSION_SECRETKEY,
   resave: true,
   saveUninitialized: true,
