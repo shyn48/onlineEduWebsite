@@ -56,8 +56,8 @@ class ForgotPasswordController extends controller {
         port: 2525,
         secure: false,
         auth: {
-          user: '06f13d3148f237',
-          pass: 'ccb3b1bb507daf'
+          user: process.env.EMAIL_SERVICE_USER,
+          pass: process.env.EMAIL_SERVICE_PASS
         }
       });
 
