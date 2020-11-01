@@ -71,7 +71,7 @@ class ResetPasswordController extends controller {
       req.flash('errors', 'آپدیت شدن انجام نشد');
       return this.back();
     }
-    user.password = req.body.password;
+    user.password = user.hashPassword(req.body.password);
     user.save();
     await field.updateOne({ use: true });
     return res.redirect('/auth/login');

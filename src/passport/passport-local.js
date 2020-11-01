@@ -32,9 +32,10 @@ passport.use(
 
         const newUser = new User({
           name: req.body.name,
-          email: req.body.email,
-          password: req.body.password,
+          email,
         });
+
+        newUser.$set({ password: newUser.hashPassword(password) })
 
         newUser.save((err) => {
           if (err) {

@@ -110,7 +110,8 @@ module.exports = class Application {
 
   setRouters() {
     app.use(apiRouters);
-    app.use(csurf({ cookie: true }), routers);
-    app.use(csurfErrorHandler.handle);
+    app.use(routers)
+    // app.use(csurf({ cookie: true }), routers);
+    // app.use(csurfErrorHandler.handle);
   }
 };
